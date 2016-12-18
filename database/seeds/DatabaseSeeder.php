@@ -11,6 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+//        App\Chat::truncate();
+//        App\HashTag::truncate();
+
+        
+
+        $this->call(UserSeeder::class);
+        $this->call(HashTagSeeder::class);
+        $this->call(ChatSeeder::class);
     }
 }

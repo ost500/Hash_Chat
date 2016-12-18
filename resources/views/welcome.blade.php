@@ -43,7 +43,7 @@ This web page has been developed by Wani.
 </form>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="/js/brain-socket-js/lib/brain-socket.min.js"></script>
+<script src="/js/brain-socket-js/brain-socket.min.js"></script>
 <script>
     (function(global, $, BrainSocket){
     // (3-2) 앱 연결, 메시지 보내기

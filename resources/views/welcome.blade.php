@@ -1,91 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--//
+This web page has been developed by Wani.
+ - me@wani.kr
+ - http://wani.kr
+-->
+<!--[if lt IE 7]><html class="ie6" lang="ko"><![endif]-->
+<!--[if IE 7]><html class="ie7" lang="ko"><![endif]-->
+<!--[if IE 8]><html class="ie8" lang="ko"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="ko"><!--<![endif]-->
+<head>
+    <title>Your Title</title>
+    <meta charset="utf-8" />
 
-        <title>Laravel</title>
+    <style>
+        div.chat {
+            border: 1px solid #aaa;
+            width:100%;
+            height:400px;
+            overflow: scroll;
+        }
+        div.chat div.item + div.item {
+            margin-top: 20px;
+        }
+        div.chat div.name {
+            font-size: 14px;
+            color: #999;
+        }
+        div.chat div.message {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+<div class="chat"></div>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+<form class="form">
+    <input type="text" id="name" placeholder="Name" value="손님{{ rand(0,1000) }}" />
+    <input type="text" id="message" placeholder="Your Message" autofocus />
+    <button type="submit">Send</button>
+</form>
 
-            .full-height {
-                height: 100vh;
-            }
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/brain-socket-js/lib/brain-socket.min.js"></script>
+<script>
+    (function(global, $, BrainSocket){
+    // (3-2) 앱 연결, 메시지 보내기
+    var app = new BrainSocket(
+        new WebSocket('ws://hashchat.app:8080'),
+        new BrainSocketPubSub()
+    );
+    var submitMessage = function () {
+        var name = $('#name').val();
+        var message = $('#message').val();
+        $('#message').val(''); // 폼 초기화
+        app.message('send.message', {name: name, message: message});
+    };
+    $('form').bind('submit', function () {
+        setTimeout(submitMessage, 0);
+        return false;
+    });
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    // (3-3) 수신된 메시지 처리
+        app.Event.listen('receive.message', function (msg) {
+            // 본문 추가
+            $('div.chat').append('<div class="item"><div class="name">' + msg.server.data.name + '</div>' +
+                    '<div class="message">' + msg.server.data.message + '</div></div>');
 
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    <a href="{{ url('/login') }}">Login</a>
-                    <a href="{{ url('/register') }}">Register</a>
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    123Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
+            // 맨 아래로 스크롤 이동
+            $('div.chat').scrollTop($('div.chat')[0].scrollHeight);
+        });
+    })(this, jQuery, BrainSocket);
+</script>
+</body>
 </html>

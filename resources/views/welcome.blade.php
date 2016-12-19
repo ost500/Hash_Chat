@@ -1,45 +1,26 @@
-<!DOCTYPE html>
-<!--//
-This web page has been developed by Wani.
- - me@wani.kr
- - http://wani.kr
--->
-<!--[if lt IE 7]>
-<html class="ie6" lang="ko"><![endif]-->
-<!--[if IE 7]>
-<html class="ie7" lang="ko"><![endif]-->
-<!--[if IE 8]>
-<html class="ie8" lang="ko"><![endif]-->
-<!--[if gt IE 8]><!-->
-<html lang="ko"><!--<![endif]-->
-<head>
-    <title>Your Title</title>
-    <meta charset="utf-8"/>
+<style>
+    div.chat {
+        border: 1px solid #aaa;
+        width: 100%;
+        height: 400px;
+        overflow: scroll;
+    }
 
-    <style>
-        div.chat {
-            border: 1px solid #aaa;
-            width: 100%;
-            height: 400px;
-            overflow: scroll;
-        }
+    div.chat div.item + div.item {
+        margin-top: 20px;
+    }
 
-        div.chat div.item + div.item {
-            margin-top: 20px;
-        }
+    div.chat div.name {
+        font-size: 14px;
+        color: #999;
+    }
 
-        div.chat div.name {
-            font-size: 14px;
-            color: #999;
-        }
+    div.chat div.message {
+        font-size: 16px;
+        color: #333;
+    }
+</style>
 
-        div.chat div.message {
-            font-size: 16px;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
 
 <div class="chat"></div>
 
@@ -50,19 +31,19 @@ This web page has been developed by Wani.
 </form>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="/js/brain-socket-js/brain-socket.min.js"></script>
+<script src="{{asset("/js/brain-socket-js/brain-socket.min.js")}}"></script>
 <script>
     (function (global, $, BrainSocket) {
         // (3-2) 앱 연결, 메시지 보내기
         var app = new BrainSocket(
-                new WebSocket('ws://hashchat.app:8080'),
+                new WebSocket('ws://52.78.239.185:8080'),
                 new BrainSocketPubSub()
         );
         var submitMessage = function () {
             var name = $('#name').val();
             var message = $('#message').val();
             $('#message').val(''); // 폼 초기화
-            app.message('send.message', {name: name, message: message, hash_tag:'channel123'});
+            app.message('send.message', {name: name, message: message, hash_tag: 'channel123'});
         };
         $('form').bind('submit', function () {
             setTimeout(submitMessage, 0);
@@ -80,5 +61,4 @@ This web page has been developed by Wani.
         });
     })(this, jQuery, BrainSocket);
 </script>
-</body>
-</html>
+

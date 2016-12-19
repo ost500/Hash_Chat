@@ -29,12 +29,15 @@ class EventListener
      */
     public function handle($data)
     {
-        Log::info($data->data->name);
+        Log::info("--------");
+//        Log::info($data->data->name);
+        Log::info($data->data->hash_tag."--------");
+
 
         $brain = new BrainSocketAppResponse();
 
 
-        return $brain->message('receive.message', [
+        return $brain->message($data->data->hash_tag, [
             'name' => $data->data->name,
             'message' => $data->data->message
         ]);

@@ -1,64 +1,31 @@
-<style>
-    div.chat {
-        border: 1px solid #aaa;
-        width: 100%;
-        height: 400px;
-        overflow: scroll;
-    }
+<ion-content class="content-stable"
+             on-swipe-left="hideTime = false"
+             on-swipe-right="hideTime = true"
+>
 
-    div.chat div.item + div.item {
-        margin-top: 20px;
-    }
+    <div ng-repeat="message in messages"
+         ng-class="{other: message.userId != myId}"
+         class="messages">
 
-    div.chat div.name {
-        font-size: 14px;
-        color: #999;
-    }
+        <!--<div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">-->
+        <div class="message">
+            <span class="msg">{{ message.text }}</span>
+        </div>
 
-    div.chat div.message {
-        font-size: 16px;
-        color: #333;
-    }
-</style>
+        <!--<div class="time" ng-class="{'slide-right': hideTime, '': !hideTime}">{{message.time}}</div>-->
 
 
-<div class="chat"></div>
+    </div>
 
-<form class="form">
-    <input type="text" id="name" placeholder="Name" value="손님{{ rand(0,1000) }}"/>
-    <input type="text" id="message" placeholder="Your Message" autofocus/>
-    <button type="submit">Send</button>
-</form>
+</ion-content>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="{{asset("/js/brain-socket-js/brain-socket.min.js")}}"></script>
-<script>
-    (function (global, $, BrainSocket) {
-        // (3-2) 앱 연결, 메시지 보내기
-        var app = new BrainSocket(
-                new WebSocket('ws://52.78.239.185:8080'),
-                new BrainSocketPubSub()
-        );
-        var submitMessage = function () {
-            var name = $('#name').val();
-            var message = $('#message').val();
-            $('#message').val(''); // 폼 초기화
-            app.message('send.message', {name: name, message: message, hash_tag: 'channel123'});
-        };
-        $('form').bind('submit', function () {
-            setTimeout(submitMessage, 0);
-            return false;
-        });
 
-        // (3-3) 수신된 메시지 처리
-        app.Event.listen('channel123', function (msg) {
-            // 본문 추가
-            $('div.chat').append('<div class="item"><div class="name">' + msg.server.data.name + '</div>' +
-                    '<div class="message">' + msg.server.data.message + '</div></div>');
-
-            // 맨 아래로 스크롤 이동
-            $('div.chat').scrollTop($('div.chat')[0].scrollHeight);
-        });
-    })(this, jQuery, BrainSocket);
-</script>
-
+<ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+    <label class="item-input-wrapper">
+        <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()"
+               ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()"/>
+    </label>
+    <button class="button button-clear" ng-click="sendMessage()">
+        Send
+    </button>
+</ion-footer-bar>

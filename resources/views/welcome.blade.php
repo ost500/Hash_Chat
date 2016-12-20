@@ -9,10 +9,10 @@
 
         <!--<div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">-->
         <div class="message">
-            <span class="msg">{{ message.text }}</span>
+            <span class="msg">@{{ message.text }}</span>
         </div>
 
-        <!--<div class="time" ng-class="{'slide-right': hideTime, '': !hideTime}">{{message.time}}</div>-->
+
 
 
     </div>

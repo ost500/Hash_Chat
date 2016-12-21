@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Chat;
 use App\Events\SomeEvent;
 use BrainSocket\BrainSocket;
 use BrainSocket\BrainSocketAppResponse;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EventListener
+class EventListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -29,16 +30,17 @@ class EventListener
      */
     public function handle($data)
     {
-        Log::info("--------");
-//        Log::info($data->data->name);
-        Log::info($data->data->hash_tag."--------");
-
 
         $brain = new BrainSocketAppResponse();
 
+        $new_chat = new Chat();
+        $new_chat->user_id = $data->data->user_id;
+        $new_chat->hash_tag_id = $data->data->hash_tag_id;
+        $new_chat->message = $data->data->message;
 
-        return $brain->message($data->data->hash_tag, [
-            'name' => $data->data->name,
+
+        return $brain->message($data->data->hash_tag_id, [
+            'name' => $data->data->user_id,
             'message' => $data->data->message
         ]);
     }

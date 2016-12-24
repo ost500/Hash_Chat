@@ -40,6 +40,9 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        if ($request->ajax()) {
+            return "HIHIHIHIHIHIHIHIHI";
+        }
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -74,6 +77,7 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         if ($request->ajax()) {
+            echo "hihihihihiihi";
             return Auth::guard('api')->user()->api_key;
         }
 

@@ -40,6 +40,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        echo "HIHIHIIHHI";
         if ($request->ajax()) {
             return "HIHIHIHIHIHIHIHIHI";
         }

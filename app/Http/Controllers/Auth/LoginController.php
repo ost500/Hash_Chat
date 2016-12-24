@@ -40,10 +40,6 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        echo "HIHIHIIHHI";
-        if ($request->ajax()) {
-            return "HIHIHIHIHIHIHIHIHI";
-        }
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -64,11 +60,11 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        if ($request->ajax()) {
-            return $this->getFailedLoginMessage();
-        }
 
-        return $this->sendFailedLoginResponse($request);
+            return $this->getFailedLoginMessage();
+
+
+//        return $this->sendFailedLoginResponse($request);
     }
 
     protected function sendLoginResponse(Request $request)
@@ -77,13 +73,13 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        if ($request->ajax()) {
-            echo "hihihihihiihi";
-            return Auth::guard('api')->user()->api_key;
-        }
 
-        return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->intended($this->redirectPath());
+
+            return Auth::guard('api')->user()->api_key;
+
+
+//        return $this->authenticated($request, $this->guard()->user())
+//            ?: redirect()->intended($this->redirectPath());
     }
 
 

@@ -17,4 +17,6 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/user', function (Request $request) {
     return json_encode(Auth::user());
 //    return json_encode($request->user());
-})->middleware('auth:api');;
+})->middleware('auth:api');
+
+Route::post('/me', 'HomeController@me');

@@ -41,7 +41,7 @@ class EventListener implements ShouldQueue
 
 
         return $brain->message($data->data->hash_tag, [
-            'name' => $data->d,
+            'name' => $data->data->name,
             'message' => $data->data->message
         ]);
     }

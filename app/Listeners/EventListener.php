@@ -40,7 +40,7 @@ class EventListener implements ShouldQueue
 //        $new_chat->save();
 
 
-        return $brain->message($data->data->hash_tag_id, [
+        return $brain->message($data->data->hash_tag, [
             'name' => $data->data->user_id,
             'message' => $data->data->message
         ]);

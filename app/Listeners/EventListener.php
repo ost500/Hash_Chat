@@ -31,6 +31,10 @@ class EventListener implements ShouldQueue
     public function handle($data)
     {
 
+        Log::info("--------");
+//        Log::info($data->data->name);
+        Log::info($data->data->hash_tag."--------");
+
         $brain = new BrainSocketAppResponse();
 //
 //        $new_chat = new Chat();

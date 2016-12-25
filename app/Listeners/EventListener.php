@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EventListener implements ShouldQueue
+class EventListener
 {
     /**
      * Create the event listener.
@@ -31,7 +31,7 @@ class EventListener implements ShouldQueue
     public function handle($data)
     {
 
-        Log::info("--------");
+
 //        Log::info($data->data->name);
 //        Log::info($data->data->hash_tag."--------");
 
@@ -42,9 +42,8 @@ class EventListener implements ShouldQueue
 //        $new_chat->hash_tag_id = $data->data->hash_tag_id;
 //        $new_chat->message = $data->data->message;
 //        $new_chat->save();
-echo "---data--message = ". $data->data->message."\n";
-echo "HI\n";
-        return $brain->message('receive.message', [
+
+        return $brain->message( $data->data->hash_tag, [
             'name' => $data->data->name,
             'message' => $data->data->message
         ]);

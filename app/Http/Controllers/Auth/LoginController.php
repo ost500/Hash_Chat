@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 
 class LoginController extends Controller
 {
@@ -62,7 +64,9 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
 
-        return $this->getFailedLoginMessage();
+        return response()->json(
+            ['status' => 'error',
+                $this->username() => Lang::get('auth.failed')], 500);
 
 
 //        return $this->sendFailedLoginResponse($request);
@@ -75,7 +79,8 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
 
-        return $request->user()->api_token;
+        return response()->json(
+            ["email"=>$request->email, "name"=>$request->user()->name, "api_token" => $request->user()->api_token]);
 //            return Auth::guard('api')->user()->api_key;
 
 

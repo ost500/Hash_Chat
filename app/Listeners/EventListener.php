@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Chat;
 use App\Events\SomeEvent;
+use App\User;
 use BrainSocket\BrainSocket;
 use BrainSocket\BrainSocketAppResponse;
 use Illuminate\Support\Facades\Log;
@@ -43,9 +44,11 @@ class EventListener
 //        $new_chat->message = $data->data->message;
 //        $new_chat->save();
 
+
         return $brain->message( $data->data->hash_tag, [
             'name' => $data->data->name,
-            'message' => $data->data->message
+            'message' => $data->data->message,
+            'api_token' => $data->data->api_token
         ]);
     }
 }

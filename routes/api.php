@@ -22,3 +22,5 @@ Route::get('/user', function (Request $request) {
 Route::post('/me', 'HomeController@me');
 
 Route::post('/edit_user', 'Auth\UserEditController@user_edit');
+
+Auth::routes();

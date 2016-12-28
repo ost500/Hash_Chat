@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('/edit_user', 'Auth\UserEditController@user_edit');
+
 Route::get('/home', 'HomeController@index');
 
 Route::get('/token', 'HomeController@token');
@@ -47,3 +49,5 @@ Route::get('/callback', function (Request $request) {
 
     return json_decode((string) $response->getBody(), true);
 });
+
+Route::post('/me', 'HomeController@me');

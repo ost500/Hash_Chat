@@ -31,6 +31,8 @@ class HomeController extends Controller
     {
         if( isset($request->api_token)){
             echo "OK";
+        };if( Auth::guard('api')->user()){
+            echo "OK";
         };
         return Auth::guard('api')->user()->id;
     }

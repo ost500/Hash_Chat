@@ -80,11 +80,11 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
 
-
-
-
         return response()->json(
-            ["email"=>$request->email, "name"=>$request->user()->name, "api_token" => $request->user()->api_token]);
+            ["email" => $request->email,
+                "name" => $request->user()->name,
+                "api_token" => $request->user()->api_token,
+                "profile_picture" => $request->user()->profile_picture]);
 //            return Auth::guard('api')->user()->api_key;
 
 

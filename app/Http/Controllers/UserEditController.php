@@ -48,4 +48,24 @@ class UserEditController extends Controller
         }
     }
 
+    public function profile_picture(Request $request)
+    {
+
+        if ($request->hasFile('profile_picture')) {
+            $user = Auth::guard('api')->user();
+
+            $profile_picture = $request->file('profile_picture');
+            $filename = $user->id;
+            //upload file to destination path
+            $destinationPath = public_path('img/profile_picture/');
+
+            $user->profile_picture = $filename;
+
+            $profile_picture->move($destinationPath, $filename);
+            return "OK";
+        }
+
+        return "error";
+    }
+
 }

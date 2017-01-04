@@ -27,5 +27,6 @@ Route::post('/edit_profile_picture', 'UserEditController@profile_picture');
 Route::get('/posts', 'PostController@get_posts');
 Route::get('/each_post/{id}', 'PostController@each_post');
 Route::get('/chats', 'ChatController@get_chat');
+Route::get('/hashtag_picture', 'HashtagController@tag_picture');
 
 Auth::routes();

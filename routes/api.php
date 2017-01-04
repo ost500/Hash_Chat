@@ -24,5 +24,6 @@ Route::post('/me', 'HomeController@me');
 Route::post('/edit_user', 'UserEditController@user_edit');
 
 Route::get('/posts', 'PostController@get_posts');
+Route::get('/chats', 'ChatController@get_chat');
 
 Auth::routes();

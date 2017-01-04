@@ -60,6 +60,7 @@ class UserEditController extends Controller
             $destinationPath = public_path('img/profile_picture/');
 
             $user->profile_picture = $filename;
+            $user->save();
 
             $profile_picture->move($destinationPath, $filename);
             return "OK";

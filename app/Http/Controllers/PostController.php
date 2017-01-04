@@ -12,4 +12,10 @@ class PostController extends Controller
         $posts = Post::latest()->forPage($request->page, 3)->get();
         return response()->json($posts);
     }
+
+    public function each_post($id)
+    {
+        $posts = Post::with('comments')->with('likes')->findOrFail($id);
+        return response()->json($posts);
+    }
 }

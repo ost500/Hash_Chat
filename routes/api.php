@@ -23,4 +23,6 @@ Route::post('/me', 'HomeController@me');
 
 Route::post('/edit_user', 'Auth\UserEditController@user_edit');
 
+Route::get('/posts', 'PostController@get_posts');
+
 Auth::routes();

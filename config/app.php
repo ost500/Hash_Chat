@@ -181,7 +181,8 @@ return [
 
         Vinkla\Pusher\PusherServiceProvider::class,
 
-        BrainSocket\BrainSocketServiceProvider::class
+        BrainSocket\BrainSocketServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
 
@@ -231,7 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'BrainSocket' => BrainSocket\BrainSocketFacade::class
+        'BrainSocket' => BrainSocket\BrainSocketFacade::class,
+
 
     ],
 

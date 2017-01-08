@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,16 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/user', function (Request $request) {
-    return $request->user();
+    return json_encode(Auth::user());
+//    return json_encode($request->user());
 })->middleware('auth:api');
+
+Route::post('/me', 'HomeController@me');
+
+Route::post('/edit_user', 'UserEditController@user_edit');
+
+Route::get('/posts', 'PostController@get_posts');
+Route::get('/each_post/{id}', 'PostController@each_post');
+Route::get('/chats', 'ChatController@get_chat');
+
+Auth::routes();

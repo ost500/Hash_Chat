@@ -17,21 +17,37 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('/edit_user', 'UserEditController@user_edit');
+
 Route::get('/home', 'HomeController@index');
 
+Route::get('/token', 'HomeController@token');
 
-Route::get('/bridge', function() {
-    $pusher = App::make('pusher');
+Route::get('/redirect', function () {
+    $query = http_build_query([
+        'client_id' => '3',
+        'redirect_uri' => 'http://localhost/callback',
+        'response_type' => 'code',
+        'scope' => '',
+    ]);
 
-    $pusher->trigger( 'test-channel',
-        'test-event',
-        array('text' => 'Preasdfawefwefwaef.eu workshop!'));
-
-    return view('welcome');
+    return redirect('/oauth/authorize?'.$query);
 });
 
-Route::get('/broadcast', function() {
-    event(new \App\Events\SomeEvent('Broadcasting in Laravel using Pusher!'));
+Route::get('/callback', function (Request $request) {
+    $http = new GuzzleHttp\Client;
 
-    return view('welcome');
+    $response = $http->post('http://localhost/oauth/token', [
+        'form_params' => [
+            'grant_type' => 'authorization_code',
+            'client_id' => '3',
+            'client_secret' => 'I36zpsrh34bKnFe9mgpxp3HCPqRRrGVkSRU0xKcP',
+            'redirect_uri' => 'http://localhost.com/callback',
+            'code' => $request->code,
+        ],
+    ]);
+
+    return json_decode((string) $response->getBody(), true);
 });
+
+Route::post('/me', 'HomeController@me');

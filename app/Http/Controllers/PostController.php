@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function each_post($id)
     {
-        $posts = Post::with('comments')->with('likes')->findOrFail($id);
+        $posts = Post::with('comments')->with('likes')->with('users')->findOrFail($id);
         return response()->json($posts);
     }
 }

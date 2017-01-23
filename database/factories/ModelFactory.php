@@ -28,6 +28,7 @@ $factory->define(App\HashTag::class, function (Faker\Generator $faker) {
     
     return [
         'tag' => $faker->word,
+        'picture' => '/image/default.png'
        
     ];
 });

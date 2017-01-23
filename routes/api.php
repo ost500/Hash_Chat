@@ -24,6 +24,7 @@ Route::post('/me', 'HomeController@me');
 Route::post('/edit_user', 'UserEditController@user_edit');
 
 Route::get('/posts', 'PostController@get_posts');
+Route::get('/hash_tag_picture', 'PostController@getHashTagPicture');
 Route::get('/each_post/{id}', 'PostController@each_post');
 Route::get('/chats', 'ChatController@get_chat');
 

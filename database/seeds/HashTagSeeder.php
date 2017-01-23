@@ -19,7 +19,7 @@ class HashTagSeeder extends Seeder
         $newhash->tag = "프리미디어";
         $newhash->save();
         $newhash = new HashTag();
-        $newhash->tag = "프리미디어2";
+        $newhash->tag = "수원대학교";
         $newhash->save();
         $newhash = new HashTag();
         $newhash->tag = "우리회사";

@@ -80,3 +80,16 @@ $factory->define(App\Like::class, function (Faker\Generator $faker) {
 
 
 
+
+
+$factory->define(App\PostHashTag::class, function (Faker\Generator $faker) {
+    $hashtagIds = App\HashTag::pluck('id')->toArray();
+    $postIds = App\Post::pluck('id')->toArray();
+    return [
+        'hash_tag_id' => $faker->randomElement($hashtagIds),
+        'post_id' => $faker->randomElement($postIds),
+    ];
+});
+
+
+

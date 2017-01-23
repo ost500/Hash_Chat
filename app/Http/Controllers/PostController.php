@@ -33,7 +33,7 @@ class PostController extends Controller
         $tag = $request->tag;
 
 
-        $picture = HashTag::where('tag', $tag)->first()->picture;
+        $picture = HashTag::where('tag', $tag)->first();
 
         return response()->json($picture);
     }

@@ -43,7 +43,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        return response()->json($request->all());
+        
 
         Validator::make($request->all(), [
             'message' => 'required|max:1000',

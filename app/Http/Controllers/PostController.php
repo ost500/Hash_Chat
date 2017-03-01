@@ -75,6 +75,10 @@ class PostController extends Controller
         str_replace(" ", "", $request->hashtag);
         $newHashArray = explode("#", $request->hashtag);
 
+        if (in_array("", $newHashArray)) {
+            $newHashArray[] = "";
+        }
+
         foreach ($newHashArray as $newHashArrayItem) {
 
 

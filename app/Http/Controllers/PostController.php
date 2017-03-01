@@ -6,6 +6,7 @@ use App\HashTag;
 use App\Post;
 use App\PostHashTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class PostController extends Controller
@@ -42,6 +43,8 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        return response()->json($request->all());
+
         Validator::make($request->all(), [
             'message' => 'required|max:1000',
 
@@ -53,10 +56,18 @@ class PostController extends Controller
             'hashtag.max' => '해시태그가 너무 많습니다',
         ])->validate();
 
+        if (Auth::guard('api')->user()) {
+            $user_id = Auth::guard('api')->user()->id;
+        } else {
+            $user_id = 100;
+        }
+
+
         $newPost = new Post();
 
         $newPost->message = $request->message;
         $newPost->picture = "/image/default.png";
+        $newPost->user_id = $user_id;
 
         $newPost->save();
 

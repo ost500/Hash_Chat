@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Validator;
+
+use Illuminate\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

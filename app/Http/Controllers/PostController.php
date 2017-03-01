@@ -90,13 +90,15 @@ class PostController extends Controller
                 $hash_id = $hashQuery->first()->id;
             }
 
-            $newHashTag = new PostHashTag();
-            $newHashTag->post_id = $newPost->id;
-            $newHashTag->hash_tag_id = $hash_id;
+            $newPostHashTag = new PostHashTag();
+            $newPostHashTag->post_id = $newPost->id;
+            $newPostHashTag->hash_tag_id = $hash_id;
+            $newPostHashTag->save();
+
 
         }
 
-        return "OK";
+        return response()->json($newPost);
 
 
     }

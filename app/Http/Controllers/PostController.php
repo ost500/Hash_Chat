@@ -19,7 +19,7 @@ class PostController extends Controller
         $posts = Post::whereHas('hash_tags', function ($q) use ($tag) {
             $q->where('tag', $tag);
         })
-            ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')
+            ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')->latest()
             ->forPage($request->page, 3)->get();
 
         return response()->json($posts);

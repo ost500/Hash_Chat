@@ -6,7 +6,7 @@ use App\HashTag;
 use App\Post;
 use App\PostHashTag;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
+use Validator;
 
 class PostController extends Controller
 {

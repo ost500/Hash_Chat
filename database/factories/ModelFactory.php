@@ -50,7 +50,7 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
     $hash_tagIds = App\HashTag::pluck('id')->toArray();
     return [
         'user_id' => $faker->randomElement($userIds),
-        'hash_tag_id' => $faker->randomElement($hash_tagIds),
+        
         'message' => $faker->text(200),
         'picture' => '/image/default.png'
     ];

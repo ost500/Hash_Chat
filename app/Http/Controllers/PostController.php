@@ -43,7 +43,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        
+
 
         Validator::make($request->all(), [
             'message' => 'required|max:1000',
@@ -59,7 +59,7 @@ class PostController extends Controller
         if (Auth::guard('api')->user()) {
             $user_id = Auth::guard('api')->user()->id;
         } else {
-            $user_id = 100;
+            $user_id = 2;
         }
 
 
@@ -83,6 +83,7 @@ class PostController extends Controller
             if ($hashQuery->isEmpty()) {
                 $newHashTag = new HashTag();
                 $newHashTag->tag = $newHashArrayItem;
+                $newHashTag->picture = "/image/default.png";
                 $newHashTag->save();
 
                 $hash_id = $newHashTag->id;

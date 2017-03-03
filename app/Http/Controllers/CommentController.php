@@ -15,7 +15,7 @@ class CommentController extends Controller
         return response()->json($comment);
     }
 
-    public function store(Request $request, $id)
+    public function store($id)
     {
         if (Auth::guard('api')->user()) {
 

@@ -15,14 +15,14 @@ class CommentController extends Controller
         return response()->json($comment);
     }
 
-    public function store($id)
+    public function store(Request $request, $id)
     {
         if (Auth::guard('api')->user()) {
 
             $like = new Comment();
             $like->user_id = Auth::guard('api')->user()->id;
             $like->post_id = $id;
-            $like->message = $id;
+            $like->message = $request->data;
             $like->save();
 
         } else {

@@ -30,4 +30,6 @@ Route::get('/each_post/{id}', 'PostController@each_post');
 Route::get('/chats', 'ChatController@get_chat');
 Route::get('/hashtag', 'HashTagController@hashtag');
 
+Route::post('/like/{id}', 'LikeController@store');
+
 Auth::routes();

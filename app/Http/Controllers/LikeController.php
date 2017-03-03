@@ -10,15 +10,19 @@ class LikeController extends Controller
 {
     public function store($id)
     {
-        if (Auth::guard('api')->user() && Like::where('user_id', Auth::guard('api')->user()->id)
-                ->where('post_id', $id)->get()->isEmpty()
-        ) {
+        if (Auth::guard('api')->user()) {
 
-            $like = new Like();
-            $like->user_id = Auth::guard('api')->user()->id;
-            $like->post_id = $id;
-            $like->save();
-            
+            if (Like::where('user_id', Auth::guard('api')->user()->id)
+                ->where('post_id', $id)->get()->isEmpty()
+            ) {
+                $like = new Like();
+                $like->user_id = Auth::guard('api')->user()->id;
+                $like->post_id = $id;
+                $like->save();
+            } else {
+                return response("이미 좋아요 했습니다", 402);
+            }
+
 
         } else {
             return response("먼저 로그인 하세요", 402);

@@ -81,7 +81,7 @@ class PostController extends Controller
             // save the name with path
             $newPost->picture = $destinationPath . $newPost->id . '_' . $filename;
             // upload
-            $pictureFile->move($destinationPath, $pictureFile);
+            $pictureFile->move($destinationPath, $newPost->picture);
         }
         $newPost->save();
 

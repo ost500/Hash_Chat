@@ -20,7 +20,8 @@ class LikeController extends Controller
                 $like->post_id = $id;
                 $like->save();
             } else {
-                return response("이미 좋아요 했습니다", 402);
+                Like::where('user_id', Auth::guard('api')->user()->id)
+                    ->where('post_id', $id)->delete();
             }
 
 

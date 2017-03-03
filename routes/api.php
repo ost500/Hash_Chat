@@ -32,4 +32,6 @@ Route::get('/hashtag', 'HashTagController@hashtag');
 
 Route::post('/like/{id}', 'LikeController@store');
 
+Route::get('/comments/{id}', 'CommentController@show');
+
 Auth::routes();

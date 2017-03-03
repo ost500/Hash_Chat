@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\HashTag;
+use App\Like;
 use App\Post;
 use App\PostHashTag;
 use Illuminate\Http\Request;
@@ -15,6 +16,16 @@ class PostController extends Controller
     {
 //        $posts = Post::latest()->with('users')->withCount('hash_tags')->withCount('likes')->withCount('comments')->forPage($request->page, 3)->get();
 
+        $like = ['like' => false];
+        if (Auth::guard('api')->user()) {
+            if (Like::where('user_id', Auth::guard('api')->user()->id)->get()->isEmpty()) {
+                $like['like'] = false;
+            } else {
+                $like['like'] = true;
+            }
+
+        }
+
         $tag = $request->tag;
         $posts = Post::whereHas('hash_tags', function ($q) use ($tag) {
             $q->where('tag', $tag);
@@ -22,7 +33,7 @@ class PostController extends Controller
             ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')->latest()
             ->forPage($request->page, 3)->get();
 
-        return response()->json($posts);
+        return response()->json([$posts, $like]);
     }
 
     public function each_post($id)

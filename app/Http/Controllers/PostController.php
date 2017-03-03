@@ -15,7 +15,7 @@ class PostController extends Controller
     public function get_posts(Request $request)
     {
 //        $posts = Post::latest()->with('users')->withCount('hash_tags')->withCount('likes')->withCount('comments')->forPage($request->page, 3)->get();
-        
+
 
         $tag = $request->tag;
         $posts = Post::whereHas('hash_tags', function ($q) use ($tag) {
@@ -31,7 +31,7 @@ class PostController extends Controller
     {
         $like = ['like' => false];
         if (Auth::guard('api')->user()) {
-            if (Like::where('user_id', Auth::guard('api')->user()->id)->get()->isEmpty()) {
+            if (Like::where('user_id', Auth::guard('api')->user()->id)->where('post_id', $id)->get()->isEmpty()) {
                 $like['like'] = false;
             } else {
                 $like['like'] = true;

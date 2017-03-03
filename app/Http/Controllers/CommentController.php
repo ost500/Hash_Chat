@@ -11,7 +11,7 @@ class CommentController extends Controller
 {
     public function show(Request $request, $id)
     {
-        $comment = Comment::where('post_id', $id)->forPage($request->page, 5)->get();
+        $comment = Comment::where('post_id', $id)->with('users')->forPage($request->page, 5)->get();
         return response()->json($comment);
     }
 

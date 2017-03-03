@@ -29,4 +29,14 @@ class CommentController extends Controller
             return response("먼저 로그인 하세요", 402);
         }
     }
+
+    public function destroy($id)
+    {
+        $comment = Comment::findorfail($id);
+        if ($comment->user_id == Auth::guard('api')->user()->id) {
+            $comment->delete();
+        } else {
+            return response("본인의 댓글만 삭제할 수 있습니다", 402);
+        }
+    }
 }

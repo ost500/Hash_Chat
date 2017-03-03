@@ -34,5 +34,6 @@ Route::post('/like/{id}', 'LikeController@store');
 
 Route::get('/comments/{id}', 'CommentController@show');
 Route::post('/comments/{id}', 'CommentController@store');
+Route::delete('/comments/{id}', 'CommentController@destroy');
 
 Auth::routes();

@@ -41,11 +41,11 @@ class UserEditController extends Controller
             $edit_user->save();
 
             return response()->json(
-                ["email" => $edit_user->email, "name" => $edit_user->name, "api_token" => $edit_user->api_token]);
+                ["email" => $edit_user->email, "name" => $edit_user->name, "api_token" => $edit_user->api_token, "picture" => $edit_user->picture]);
         } else {
 //            return "not loged";
             return response()->json(
-                ["email" => $request->email, "name" => $request->name, "api_token" => $request->api_token]);
+                ["email" => $request->email, "name" => $request->name, "api_token" => $request->api_token, "picture" => $request->picture]);
         }
     }
 

@@ -71,6 +71,19 @@ class PostController extends Controller
 
         $newPost->save();
 
+        if ($request->hasFile('picture')) {
+            // pictureFile = file
+            $pictureFile = $request->file('picture');
+            // name
+            $filename = $pictureFile->getClientOriginalName();
+            // path
+            $destinationPath = 'picture/';
+            // save the name with path
+            $newPost->picture = $newPost->id . '_' . $filename;
+            // upload
+            $pictureFile->move($destinationPath, $newPost->excel_file);
+        }
+        $newPost->save();
 
         str_replace(" ", "", $request->hashtag);
         $newHashArray = explode("#", $request->hashtag);

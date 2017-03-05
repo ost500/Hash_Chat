@@ -81,7 +81,7 @@ class LoginController extends Controller
 
 
         return response()->json(
-            ["email" => $request->email, "name" => $request->user()->name, "api_token" => $request->user()->api_token, "picture" => $request->user()->picture]);
+            ["email" => $request->email, "name" => $request->user()->name, "user_id" => $request->user()->id, "api_token" => $request->user()->api_token, "picture" => $request->user()->picture]);
 //            return Auth::guard('api')->user()->api_key;
 
 

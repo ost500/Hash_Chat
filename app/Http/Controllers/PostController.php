@@ -80,6 +80,7 @@ class PostController extends Controller
         $newPost->message = $request->message;
         $newPost->picture = "/image/default.png";
         $newPost->user_id = $user_id;
+        $newPost->api_token = $request->api_token;
 
         $newPost->save();
 
@@ -134,12 +135,13 @@ class PostController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $post = Post::findorfail($id);
 
         if (Auth::guard('api')->user()->check()
-            && $post->user_id == Auth::guard('api')->user()->id
+            && ($post->user_id == Auth::guard('api')->user()->id
+                || $post->api_token == $request->api_token)
         ) {
 
             $post->delete();

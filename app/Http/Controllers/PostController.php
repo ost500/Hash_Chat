@@ -43,6 +43,28 @@ class PostController extends Controller
         return response()->json([$posts, $like]);
     }
 
+    public function my_post(Request $request)
+    {
+        if (Auth::guard('api')->check()) {
+            $my_post = Post::where('user_id', Auth::guard('api')->user()->id)
+                ->with('users')->withCount('hash_tags')
+                ->with('hash_tags')->withCount('likes')
+                ->withCount('comments')->latest()
+                ->get();
+        } else {
+            $my_post = Post::where('api_token', $request->api_token)
+                ->with('users')->withCount('hash_tags')
+                ->with('hash_tags')->withCount('likes')
+                ->withCount('comments')->latest()
+                ->get();
+
+            return response()->json($my_post);
+        }
+
+
+        return response()->json($my_post);
+    }
+
     public function getHashTagPicture(Request $request)
     {
         $tag = $request->tag;

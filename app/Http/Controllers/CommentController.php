@@ -33,7 +33,7 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $comment = Comment::findorfail($id);
-        if (Auth::guard('api')->user()->check()
+        if (Auth::guard('api')->check()
             && $comment->user_id == Auth::guard('api')->user()->id) {
             $comment->delete();
         } else {

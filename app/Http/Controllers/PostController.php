@@ -132,4 +132,24 @@ class PostController extends Controller
 
 
     }
+
+
+    public function destroy($id)
+    {
+        $post = Post::findorfail($id);
+
+        if (Auth::guard('api')->user()->check()
+            && $post->user_id == Auth::guard('api')->user()->id
+        ) {
+
+            $post->delete();
+
+
+        } else {
+            return response("본인의 게시물만 삭제할 수 있습니다", 402);
+        }
+
+    }
+
+
 }

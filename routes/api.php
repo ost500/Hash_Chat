@@ -24,6 +24,7 @@ Route::post('/me', 'HomeController@me');
 Route::post('/edit_user', 'UserEditController@user_edit');
 
 Route::get('/posts', 'PostController@get_posts');
+Route::get('/my_posts', 'PostController@my_posts');
 Route::post('/posts', 'PostController@store');
 Route::delete('/posts/{id}', 'PostController@destroy');
 

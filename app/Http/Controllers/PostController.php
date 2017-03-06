@@ -43,7 +43,7 @@ class PostController extends Controller
         return response()->json([$posts, $like]);
     }
 
-    public function my_post(Request $request)
+    public function my_posts(Request $request)
     {
         if (Auth::guard('api')->check()) {
             $my_post = Post::where('user_id', Auth::guard('api')->user()->id)

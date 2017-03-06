@@ -50,13 +50,13 @@ class PostController extends Controller
                 ->with('users')->withCount('hash_tags')
                 ->with('hash_tags')->withCount('likes')
                 ->withCount('comments')->latest()
-                ->get();
+                ->forPage($request->page, 3)->get();
         } else {
             $my_post = Post::where('api_token', $request->api_token)
                 ->with('users')->withCount('hash_tags')
                 ->with('hash_tags')->withCount('likes')
                 ->withCount('comments')->latest()
-                ->get();
+                ->forPage($request->page, 3)->get();
 
             return response()->json($my_post);
         }

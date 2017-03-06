@@ -161,7 +161,7 @@ class PostController extends Controller
     {
         $post = Post::findorfail($id);
 
-        if (Auth::guard('api')->user()->check()
+        if (Auth::guard('api')->check()
             && ($post->user_id == Auth::guard('api')->user()->id
                 || $post->api_token == $request->api_token)
         ) {

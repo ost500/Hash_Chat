@@ -151,6 +151,12 @@ class PostController extends Controller
 
         }
 
+        $source_img = $newPost->picture;
+        $destination_img = $newPost->picture;
+
+        $this->compress($source_img, $destination_img, 90);
+
+
         return response()->json($newPost);
 
 
@@ -175,5 +181,24 @@ class PostController extends Controller
 
     }
 
+
+    function compress($source, $destination, $quality) {
+
+        $info = getimagesize($source);
+        $image = "";
+
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source);
+
+        elseif ($info['mime'] == 'image/gif')
+            $image = imagecreatefromgif($source);
+
+        elseif ($info['mime'] == 'image/png')
+            $image = imagecreatefrompng($source);
+
+        imagejpeg($image, $destination, $quality);
+
+        return $destination;
+    }
 
 }

@@ -28,6 +28,7 @@ $factory->define(App\HashTag::class, function (Faker\Generator $faker) {
     
     return [
         'tag' => $faker->word,
+        'picture' => '/image/default.png'
        
     ];
 });
@@ -49,7 +50,7 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
     $hash_tagIds = App\HashTag::pluck('id')->toArray();
     return [
         'user_id' => $faker->randomElement($userIds),
-        'hash_tag_id' => $faker->randomElement($hash_tagIds),
+        
         'message' => $faker->text(200),
         'picture' => '/image/default.png'
     ];
@@ -74,6 +75,19 @@ $factory->define(App\Like::class, function (Faker\Generator $faker) {
     $postIds = App\Post::pluck('id')->toArray();
     return [
         'user_id' => $faker->randomElement($userIds),
+        'post_id' => $faker->randomElement($postIds),
+    ];
+});
+
+
+
+
+
+$factory->define(App\PostHashTag::class, function (Faker\Generator $faker) {
+    $hashtagIds = App\HashTag::pluck('id')->toArray();
+    $postIds = App\Post::pluck('id')->toArray();
+    return [
+        'hash_tag_id' => $faker->randomElement($hashtagIds),
         'post_id' => $faker->randomElement($postIds),
     ];
 });

@@ -167,9 +167,9 @@ class PostController extends Controller
     {
         $post = Post::findorfail($id);
 
-        if (Auth::guard('api')->check()
-            && ($post->user_id == Auth::guard('api')->user()->id
-                || $post->api_token == $request->api_token)
+        if ((Auth::guard('api')->check()
+                && $post->user_id == Auth::guard('api')->user()->id)
+            || $post->api_token == $request->api_token
         ) {
 
             $post->delete();
@@ -182,7 +182,8 @@ class PostController extends Controller
     }
 
 
-    function compress($source, $destination, $quality) {
+    function compress($source, $destination, $quality)
+    {
 
         $info = getimagesize($source);
         $image = "";

@@ -117,6 +117,10 @@ class PostController extends Controller
             $newPost->picture = $destinationPath . $newPost->id . '_' . $filename;
             // upload
             $pictureFile->move($destinationPath, $newPost->picture);
+            // image compress
+            $source_img = $newPost->picture;
+            $destination_img = $newPost->picture;
+            $this->compress($source_img, $destination_img, 30);
         }
         $newPost->save();
 
@@ -151,10 +155,7 @@ class PostController extends Controller
 
         }
 
-        $source_img = $newPost->picture;
-        $destination_img = $newPost->picture;
 
-        $this->compress($source_img, $destination_img, 30);
 
 
         return response()->json($newPost);

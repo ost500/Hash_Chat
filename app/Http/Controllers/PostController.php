@@ -154,7 +154,7 @@ class PostController extends Controller
         $source_img = $newPost->picture;
         $destination_img = $newPost->picture;
 
-        $this->compress($source_img, $destination_img, 90);
+        $this->compress($source_img, $destination_img, 30);
 
 
         return response()->json($newPost);

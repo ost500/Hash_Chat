@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use App\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,20 +55,47 @@ class UserEditController extends Controller
 
         if ($request->hasFile('profile_picture')) {
             $user = Auth::guard('api')->user();
+            $user = User::find($user->id);
 
             $profile_picture = $request->file('profile_picture');
             $filename = $user->id;
             //upload file to destination path
-            $destinationPath = public_path('img/profile_picture/');
+            $destinationPath = 'profile_picture/';
 
             $user->profile_picture = $filename;
-            $user->save();
+
 
             $profile_picture->move($destinationPath, $filename);
+
+
+            $user->picture = $destinationPath . $filename;
+            $this->compress($user->picture, $user->picture, 30);
+            $user->save();
+
             return "OK";
         }
 
         return "error";
+    }
+
+    function compress($source, $destination, $quality)
+    {
+
+        $info = getimagesize($source);
+        $image = "";
+
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source);
+
+        elseif ($info['mime'] == 'image/gif')
+            $image = imagecreatefromgif($source);
+
+        elseif ($info['mime'] == 'image/png')
+            $image = imagecreatefrompng($source);
+
+        imagejpeg($image, $destination, $quality);
+
+        return $destination;
     }
 
 }

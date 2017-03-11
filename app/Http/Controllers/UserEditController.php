@@ -72,7 +72,10 @@ class UserEditController extends Controller
             $this->compress($user->picture, $user->picture, 30);
             $user->save();
 
-            return "OK";
+            return response()->json(
+                ["email" => $user->email, "name" => $user->name, "user_id" => $user->id, "api_token" => $user->api_token, "picture" => $user->picture]);
+
+
         }
 
         return "error";

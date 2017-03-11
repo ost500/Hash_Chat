@@ -57,7 +57,7 @@ class UserEditController extends Controller
             'name' => 'required|max:255',
         ])->validate();
 
-        if (Auth::guard('api')->check() && $request->hasFile('profile_picture')) {
+        if (Auth::guard('api')->check()) {
             $user = Auth::guard('api')->user();
             $user = User::find($user->id);
 

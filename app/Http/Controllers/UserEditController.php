@@ -83,27 +83,6 @@ class UserEditController extends Controller
 
 
                 $profile_picture = $request->file('profile_picture');
-                // 방향조정
-                $exif = exif_read_data($profile_picture);
-
-                // EXIF의 Orientation 데이터가 존재하면 필요에 따라 이미지 파일의 방향을 보정
-                if(!empty($exif['Orientation'])) {
-                    switch($exif['Orientation']) {
-                        case 8:
-                            $profile_picture->image_rotate = '270';
-                            break;
-                        case 3:
-                            $profile_picture->image_rotate = '180';
-                            break;
-                        case 6:
-                            $profile_picture->image_rotate = '90';
-                            break;
-                    }
-                }
-                // 방향조정 끝
-
-
-
                 $filename = $user->id;
                 //upload file to destination path
                 $destinationPath = 'profile_picture/';

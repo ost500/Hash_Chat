@@ -107,31 +107,8 @@ class PostController extends Controller
         $newPost->save();
 
         if ($request->hasFile('picture')) {
-
             // pictureFile = file
             $pictureFile = $request->file('picture');
-
-
-            $exif = exif_read_data($pictureFile);
-
-            // EXIF의 Orientation 데이터가 존재하면 필요에 따라 이미지 파일의 방향을 보정
-            if(!empty($exif['Orientation'])) {
-                switch($exif['Orientation']) {
-                    case 8:
-                        $pictureFile->image_rotate = '270';
-                        break;
-                    case 3:
-                        $pictureFile->image_rotate = '180';
-                        break;
-                    case 6:
-                        $pictureFile->image_rotate = '90';
-                        break;
-                }
-            }
-            // 방향조정 끝
-
-
-
             // name
             $filename = $pictureFile->getClientOriginalName();
             // path

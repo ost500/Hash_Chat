@@ -10,9 +10,10 @@ class HashTag extends Model
     {
         return $this->hasMany(Chat::class);
     }
-    
+
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(Post::class, 'post_hash_tags', 'post_id', 'hash_tag_id')
+            ->withPivot('created_at');
     }
 }

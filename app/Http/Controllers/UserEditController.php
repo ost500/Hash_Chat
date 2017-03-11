@@ -53,24 +53,48 @@ class UserEditController extends Controller
     public function profile_picture(Request $request)
     {
 
-        if ($request->hasFile('profile_picture')) {
+        Validator::make($request->all(), [
+            'name' => 'required|max:255',
+        ])->validate();
+
+        if (Auth::guard('api')->check() && $request->hasFile('profile_picture')) {
             $user = Auth::guard('api')->user();
             $user = User::find($user->id);
 
-            $profile_picture = $request->file('profile_picture');
-            $filename = $user->id;
-            //upload file to destination path
-            $destinationPath = 'profile_picture/';
 
+            if ($request->name) {
+                $user->name = $request->name;
+            }
+            if ($request->email) {
+                if ($user->email != $request->email) {
 
+                    Validator::make($request->all(), [
+                        'email' => 'required|email|max:255|unique:users',
+                    ])->validate();
 
+                    $user->email = $request->email;
+                }
 
-            $profile_picture->move($destinationPath, $filename);
-
-
-            $user->picture = $destinationPath . $filename;
-            $this->compress($user->picture, $user->picture, 30);
+            }
             $user->save();
+
+
+            if ($request->hasFile('profile_picture')) {
+
+
+                $profile_picture = $request->file('profile_picture');
+                $filename = $user->id;
+                //upload file to destination path
+                $destinationPath = 'profile_picture/';
+
+
+                $profile_picture->move($destinationPath, $filename);
+
+
+                $user->picture = $destinationPath . $filename;
+                $this->compress($user->picture, $user->picture, 30);
+                $user->save();
+            }
 
             return response()->json(
                 ["email" => $user->email, "name" => $user->name, "user_id" => $user->id, "api_token" => $user->api_token, "picture" => $user->picture]);

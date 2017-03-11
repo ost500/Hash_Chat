@@ -10,7 +10,7 @@ class HashTagController extends Controller
     public function hashtag(Request $request)
     {
         $hashtags = HashTag::where('tag', 'like', $request->tag . "%")
-            ->orderby('posts_count')->withCount('posts')->get();
+            ->orderby('posts_count','desc')->withCount('posts')->get();
         return response()->json($hashtags);
     }
 }

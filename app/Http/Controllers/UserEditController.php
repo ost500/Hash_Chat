@@ -62,7 +62,7 @@ class UserEditController extends Controller
             //upload file to destination path
             $destinationPath = 'profile_picture/';
 
-            $user->profile_picture = $filename;
+
 
 
             $profile_picture->move($destinationPath, $filename);

@@ -14,7 +14,7 @@ class Post extends Model
     public function hash_tags()
     {
         return $this->belongsToMany(HashTag::class,
-            'post_hash_tags', 'hash_tag_id', 'post_id')
+            'post_hash_tags', 'post_id', 'hash_tag_id')
             ->withPivot('created_at');
     }
 

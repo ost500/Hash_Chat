@@ -46,7 +46,7 @@ class UserEditController extends Controller
         } else {
 //            return "not loged";
             return response()->json(
-                ["email" => $request->email, "name" => $request->name, "api_token" => $request->api_token, "picture" => $request->picture]);
+                ["email" => $request->email, "name" => $request->name, "api_token" => $request->api_token, "picture" => "profile_picture/default.png"]);
         }
     }
 

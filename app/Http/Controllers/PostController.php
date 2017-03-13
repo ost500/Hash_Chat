@@ -131,6 +131,8 @@ class PostController extends Controller
             $newHashArray[] = "";
         }
 
+        $newHashArray = array_unique($newHashArray, SORT_REGULAR);
+
         foreach ($newHashArray as $newHashArrayItem) {
 
 

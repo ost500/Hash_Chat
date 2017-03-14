@@ -79,6 +79,8 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
+        $request->user()->token = $request->token;
+        $request->user()->save();
 
         return response()->json(
             ["email" => $request->email, "name" => $request->user()->name, "user_id" => $request->user()->id, "api_token" => $request->user()->api_token, "picture" => $request->user()->picture]);

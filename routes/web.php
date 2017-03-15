@@ -115,7 +115,7 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 
     // Get basic info on the user from Facebook.
     try {
-        $response = $fb->get('/me?fields=name,email,picture');
+        $response = $fb->get('/me?fields=picture.type(large),name,email');
     } catch (Facebook\Exceptions\FacebookSDKException $e) {
         dd($e->getMessage());
     }
@@ -129,9 +129,10 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
     $user = new User();
     $user->name = $facebook_user->getName();
     $user->email = $facebook_user->getEmail();
-    $user->picture = $facebook_user->getPicture();
+    $user->picture = $facebook_user->getPicture()->getUrl();
     $user->password = "facebook_account";
     $user->api_token = str_random(60);
+
     $user->save();
 
     // Create the user if it does not exist or update the existing entry.

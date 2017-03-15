@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use Illuminate\Support\Facades\URL;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -91,7 +92,7 @@ class UserEditController extends Controller
                 $profile_picture->move($destinationPath, $filename);
 
 
-                $user->picture = $destinationPath . $filename;
+                $user->picture = URL::to('/') . "/" . $destinationPath . $filename;
                 $this->compress($user->picture, $user->picture, 30);
                 $user->save();
             }

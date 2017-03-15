@@ -11,6 +11,8 @@
 |
 */
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
@@ -60,10 +62,11 @@ Route::get('/facebook/login', function (SammyK\LaravelFacebookSdk\LaravelFaceboo
     session_start();
 
     // Send an array of permissions to request
-    $login_url = $fb->getLoginUrl(['email']);
+    $login_url = $fb->getLoginUrl(['public_profile']);
 
     // Obviously you'd do this in blade :)
-    echo '<a href="' . $login_url . '">Login with Facebook</a>';
+//    echo '<a href="' . $login_url . '">Login with Facebook</a>';
+    return redirect()->to($login_url);
 });
 
 Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb) {
@@ -112,7 +115,7 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 
     // Get basic info on the user from Facebook.
     try {
-        $response = $fb->get('/me?fields=id,name,email');
+        $response = $fb->get('/me?fields=name,email,picture');
     } catch (Facebook\Exceptions\FacebookSDKException $e) {
         dd($e->getMessage());
     }
@@ -120,7 +123,16 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
     // Convert the response to a `Facebook/GraphNodes/GraphUser` collection
     $facebook_user = $response->getGraphUser();
 
-    print_r($facebook_user);
+
+//    print_r($facebook_user);
+
+    $user = new User();
+    $user->name = $facebook_user->getName();
+    $user->email = $facebook_user->getEmail();
+    $user->picture = $facebook_user->getPicture();
+    $user->password = "facebook_account";
+    $user->api_token = str_random(60);
+    $user->save();
 
     // Create the user if it does not exist or update the existing entry.
     // This will only work if you've added the SyncableGraphNodeTrait to your User model.
@@ -129,6 +141,8 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
     // Log the user into Laravel
 //    Auth::login($user);
 //    print_r($user);
+//    print_r(Auth::user());
 
-    return response('message' + 'Successfully logged in with Facebook');
+
+    return response($user);
 });

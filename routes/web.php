@@ -127,13 +127,13 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 //    print_r($facebook_user);
 
     $user = new User();
-    $user->name = $facebook_user->getName();
-    $user->email = $facebook_user->getEmail();
-    $user->picture = $facebook_user->getPicture()->getUrl();
+    echo $user->name = $facebook_user->getName()."/";
+    echo $user->email = $facebook_user->getEmail()."/";
+    echo $user->picture = $facebook_user->getPicture()->getUrl()."/";
     $user->password = "facebook_account";
-    $user->api_token = str_random(60);
+    echo $user->api_token = str_random(60)."/";
 
-    $user->save();
+//    $user->save();
 
     // Create the user if it does not exist or update the existing entry.
     // This will only work if you've added the SyncableGraphNodeTrait to your User model.
@@ -145,5 +145,5 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 //    print_r(Auth::user());
 
 
-    return response($user);
+
 });

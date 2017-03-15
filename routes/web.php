@@ -35,7 +35,7 @@ Route::get('/redirect', function () {
         'scope' => '',
     ]);
 
-    return redirect('/oauth/authorize?'.$query);
+    return redirect('/oauth/authorize?' . $query);
 });
 
 Route::get('/callback', function (Request $request) {
@@ -51,11 +51,10 @@ Route::get('/callback', function (Request $request) {
         ],
     ]);
 
-    return json_decode((string) $response->getBody(), true);
+    return json_decode((string)$response->getBody(), true);
 });
 
 Route::post('/me', 'HomeController@me');
-
 
 
 Route::get('/facebook/login', function (SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb) {
@@ -125,15 +124,23 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 
 
 //    print_r($facebook_user);
+    if ($userExists = User::where('email', $facebook_user->getEmail())->first() != null)) {
+        echo $userExists->name . "##";
+        echo $userExists->email . "##";
+        echo $userExists->picture . "##";
+        echo $userExists->api_token . "##";
+        return;
+    }
+
 
     $user = new User();
-    echo $user->name = $facebook_user->getName()."##";
-    echo $user->email = $facebook_user->getEmail()."##";
-    echo $user->picture = $facebook_user->getPicture()->getUrl()."##";
+    echo $user->name = $facebook_user->getName() . "##";
+    echo $user->email = $facebook_user->getEmail() . "##";
+    echo $user->picture = $facebook_user->getPicture()->getUrl() . "##";
     $user->password = "facebook_account";
-    echo $user->api_token = str_random(60)."##";
+    echo $user->api_token = str_random(60) . "##";
 
-//    $user->save();
+    $user->save();
 
     // Create the user if it does not exist or update the existing entry.
     // This will only work if you've added the SyncableGraphNodeTrait to your User model.
@@ -143,7 +150,6 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 //    Auth::login($user);
 //    print_r($user);
 //    print_r(Auth::user());
-
 
 
 });

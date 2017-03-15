@@ -124,7 +124,8 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 
 
 //    print_r($facebook_user);
-    if ($userExists = User::where('email', $facebook_user->getEmail())->first() != null) {
+    $userExists = User::where('email', $facebook_user->getEmail())->first();
+    if ($userExists != null) {
         echo $userExists->name . "##";
         echo $userExists->email . "##";
         echo $userExists->picture . "##";

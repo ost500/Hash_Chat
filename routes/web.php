@@ -135,11 +135,19 @@ Route::get('/facebook/callback', function (SammyK\LaravelFacebookSdk\LaravelFace
 
 
     $user = new User();
-    echo $user->name = $facebook_user->getName() . "##";
-    echo $user->email = $facebook_user->getEmail() . "##";
-    echo $user->picture = $facebook_user->getPicture()->getUrl() . "##";
+    $user->name = $facebook_user->getName();
+
+    $user->email = $facebook_user->getEmail();
+    $user->picture = $facebook_user->getPicture()->getUrl();
     $user->password = "facebook_account";
-    echo $user->api_token = str_random(60) . "##";
+    $user->api_token = str_random(60);
+
+
+    echo $user->name . "##";
+    echo $user->email . "##";
+    echo $user->picture . "##";
+    echo $user->api_token . "##";
+
 
     $user->save();
 

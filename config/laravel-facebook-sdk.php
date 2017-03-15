@@ -22,7 +22,7 @@ return [
         'app_secret' => '8869319b3099b03be29021962580b1eb',
         'default_graph_version' => 'v2.8',
         'enable_beta_mode' => true,
-        'http_client_handler' => 'guzzle',
+        'http_client_handler' => 'curl',
     ],
 
     /*

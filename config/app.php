@@ -184,6 +184,8 @@ return [
         BrainSocket\BrainSocketServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
 
+        SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+
     ],
 
     /*
@@ -233,6 +235,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'BrainSocket' => BrainSocket\BrainSocketFacade::class,
+
+        'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
 
 
     ],

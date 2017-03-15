@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/me', 'HomeController@me');
 
 Route::post('/edit_user', 'UserEditController@user_edit');
-    Route::post('/edit_profile_picture', 'UserEditController@profile_picture');
+Route::post('/edit_profile_picture', 'UserEditController@profile_picture');
 
 Route::get('/posts', 'PostController@get_posts');
 Route::get('/my_posts', 'PostController@my_posts');
@@ -41,3 +42,9 @@ Route::post('/comments/{id}', 'CommentController@store');
 Route::delete('/comments/{id}', 'CommentController@destroy');
 
 Auth::routes();
+
+
+
+
+
+

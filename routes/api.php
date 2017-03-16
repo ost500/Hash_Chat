@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -39,7 +40,28 @@ Route::post('/like/{id}', 'LikeController@store');
 
 Route::get('/comments/{id}', 'CommentController@show');
 Route::post('/comments/{id}', 'CommentController@store');
+
 Route::delete('/comments/{id}', 'CommentController@destroy');
+
+Route::post('/facebookLogin/', function (Request $request) {
+    $user = User::where('email', $request->email)->first();
+    if ($user == null) {
+        $user = new User();
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->password = $request->facebook;
+        $user->api_token = str_random(60);
+        $user->token = $request->token;
+        $user->picture = $request->picture;
+        $user->save();
+    }
+
+    return response()->json(["email" => $user->email,
+        "name" => $user->name,
+        "api_token" => $user->api_token,
+        "picture" => $user->picture]);
+
+});
 
 Auth::routes();
 

@@ -92,7 +92,7 @@ class UserEditController extends Controller
                 $profile_picture->move($destinationPath, $filename);
 
 
-                $user->picture = URL::to('/') . "/" . $destinationPath . $filename;
+                $user->picture = $destinationPath . $filename;
                 $this->compress($user->picture, $user->picture, 30);
                 $user->save();
             }

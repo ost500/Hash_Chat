@@ -49,11 +49,21 @@ Route::post('/facebookLogin/', function (Request $request) {
         $user = new User();
         $user->email = $request->email;
         $user->name = $request->name;
-        $user->password = $request->facebook;
+        $user->password = $request->password;
         $user->api_token = str_random(60);
         $user->token = $request->token;
         $user->picture = $request->picture;
+
         $user->save();
+
+        $url = $request->picture;
+        $img = 'profile_picture/' . $user->id;
+        file_put_contents($img, file_get_contents($url));
+
+        $user->picture = $img;
+        $user->save();
+
+
     }
 
     return response()->json(["email" => $user->email,

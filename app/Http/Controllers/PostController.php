@@ -6,6 +6,7 @@ use App\HashTag;
 use App\Like;
 use App\Post;
 use App\PostHashTag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -23,6 +24,24 @@ class PostController extends Controller
         })
             ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')->latest()
             ->forPage($request->page, 3)->get();
+
+        return response()->json($posts);
+    }
+
+    public function get_best_posts(Request $request)
+    {
+//        $posts = Post::latest()->with('users')->withCount('hash_tags')->withCount('likes')->withCount('comments')->forPage($request->page, 3)->get();
+
+        $date = new Carbon();
+        $date = $date->subDays(7);
+
+        $tag = $request->tag;
+        $posts = Post::whereHas('hash_tags', function ($q) use ($tag) {
+            $q->where('tag', $tag);
+        })->where('created_at', '>', $date->toDateTimeString())
+            ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')
+            ->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')
+            ->get();
 
         return response()->json($posts);
     }
@@ -156,8 +175,6 @@ class PostController extends Controller
 
 
         }
-
-
 
 
         return response()->json($newPost);

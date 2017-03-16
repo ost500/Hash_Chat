@@ -27,6 +27,7 @@ Route::post('/edit_user', 'UserEditController@user_edit');
 Route::post('/edit_profile_picture', 'UserEditController@profile_picture');
 
 Route::get('/posts', 'PostController@get_posts');
+Route::get('/best_posts', 'PostController@get_best_posts');
 Route::get('/my_posts', 'PostController@my_posts');
 Route::post('/posts', 'PostController@store');
 Route::delete('/posts/{id}', 'PostController@destroy');

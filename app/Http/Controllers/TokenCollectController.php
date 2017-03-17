@@ -14,6 +14,6 @@ class TokenCollectController extends Controller
             $token->token = $request->token;
             $token->save();
         }
-        return response()->isOk();
+        echo "OK";
     }
 }

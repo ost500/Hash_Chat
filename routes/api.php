@@ -65,7 +65,11 @@ Route::post('/facebookLogin/', function (Request $request) {
         $user->save();
 
 
+    } else {
+        $user->token = $request->token;
+        $user->save();
     }
+
 
     return response()->json(["email" => $user->email,
         "name" => $user->name,

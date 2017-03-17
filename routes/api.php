@@ -78,6 +78,8 @@ Route::post('/facebookLogin/', function (Request $request) {
 
 });
 
+Route::post('/everytoken', 'TokenCollectController@save_token');
+
 Auth::routes();
 
 

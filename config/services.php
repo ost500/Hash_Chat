@@ -22,7 +22,7 @@ return [
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
-        'region' => 'Oregon',
+        'region' => 'us-west-2',
     ],
 
     'sparkpost' => [

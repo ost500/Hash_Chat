@@ -41,7 +41,7 @@ class PostController extends Controller
         })->where('created_at', '>', $date->toDateTimeString())
             ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')
             ->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')
-            ->get();
+            ->forPage($request->page, 3)->get();
 
         return response()->json($posts);
     }
@@ -59,7 +59,7 @@ class PostController extends Controller
         })->where('created_at', '>', $date->toDateTimeString())
             ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')
             ->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')
-            ->get();
+            ->forPage($request->page, 3)->get();
 
         return response()->json($posts);
     }

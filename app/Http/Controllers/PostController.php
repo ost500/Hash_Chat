@@ -46,6 +46,24 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
+    public function get_monthlybest_posts(Request $request)
+    {
+//        $posts = Post::latest()->with('users')->withCount('hash_tags')->withCount('likes')->withCount('comments')->forPage($request->page, 3)->get();
+
+        $date = new Carbon();
+        $date = $date->subMonth(1);
+
+        $tag = $request->tag;
+        $posts = Post::whereHas('hash_tags', function ($q) use ($tag) {
+            $q->where('tag', $tag);
+        })->where('created_at', '>', $date->toDateTimeString())
+            ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')
+            ->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')
+            ->get();
+
+        return response()->json($posts);
+    }
+
     public function each_post($id)
     {
         $like = ['like' => false];

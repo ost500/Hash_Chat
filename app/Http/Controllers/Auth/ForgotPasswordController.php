@@ -44,9 +44,14 @@ class ForgotPasswordController extends Controller
         );
 
         if ($response === Password::RESET_LINK_SENT) {
-            return back()->with('status', trans($response));
+            return "OK";
         }
 
-        return "OK";
+        // If an error was returned by the password broker, we will get this message
+        // translated so we can notify a user of the problem. We'll redirect back
+        // to where the users came from so they can attempt this process again.
+        return back()->withErrors(
+            ['email' => trans($response)]
+        );
     }
 }

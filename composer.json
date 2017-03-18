@@ -12,7 +12,9 @@
         "vinkla/pusher": "^2.4",
         "brainboxlabs/brain-socket": "^1.0",
         "laravel/passport": "^1.0",
-        "sammyk/laravel-facebook-sdk": "^3.4"
+        "sammyk/laravel-facebook-sdk": "^3.4",
+        "guzzlehttp/guzzle": "^6.2",
+        "aws/aws-sdk-php": "^3.24"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

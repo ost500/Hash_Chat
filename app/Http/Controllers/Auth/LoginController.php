@@ -91,5 +91,10 @@ class LoginController extends Controller
 //            ?: redirect()->intended($this->redirectPath());
     }
 
+    public function username()
+    {
+        return 'name';
+    }
+
 
 }

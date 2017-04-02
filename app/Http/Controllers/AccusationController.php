@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Accusation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class AccusationController extends Controller
 {

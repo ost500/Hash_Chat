@@ -17,10 +17,18 @@ class PostController extends Controller
     {
 //        $posts = Post::latest()->with('users')->withCount('hash_tags')->withCount('likes')->withCount('comments')->forPage($request->page, 3)->get();
 
+        if (Auth::guard('api')->user()) {
+            $user_id = Auth::guard('api')->user()->id;
+        } else {
+            $user_id = 2;
+        }
+
 
         $tag = $request->tag;
         $posts = Post::whereHas('hash_tags', function ($q) use ($tag) {
             $q->where('tag', $tag);
+        })->whereDoesntHave('accusations', function ($q) use ($user_id) {
+            $q->where('user_id', $user_id);
         })
             ->with('users')->withCount('hash_tags')->with('hash_tags')->withCount('likes')->withCount('comments')->latest()
             ->forPage($request->page, 3)->get();
@@ -31,6 +39,12 @@ class PostController extends Controller
     public function get_best_posts(Request $request)
     {
 //        $posts = Post::latest()->with('users')->withCount('hash_tags')->withCount('likes')->withCount('comments')->forPage($request->page, 3)->get();
+
+        if (Auth::guard('api')->user()) {
+            $user_id = Auth::guard('api')->user()->id;
+        } else {
+            $user_id = 2;
+        }
 
         $date = new Carbon();
         $date = $date->subDays(7);
@@ -48,6 +62,12 @@ class PostController extends Controller
 
     public function get_monthlybest_posts(Request $request)
     {
+        if (Auth::guard('api')->user()) {
+            $user_id = Auth::guard('api')->user()->id;
+        } else {
+            $user_id = 2;
+        }
+
 //        $posts = Post::latest()->with('users')->withCount('hash_tags')->withCount('likes')->withCount('comments')->forPage($request->page, 3)->get();
 
         $date = new Carbon();

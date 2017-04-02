@@ -93,4 +93,15 @@ $factory->define(App\PostHashTag::class, function (Faker\Generator $faker) {
 });
 
 
+$factory->define(App\Accusation::class, function (Faker\Generator $faker) {
+    $userIds = App\User::pluck('id')->toArray();
+    $postIds = App\Post::pluck('id')->toArray();
+    return [
+        'user_id' => $faker->randomElement($userIds),
+        'post_id' => $faker->randomElement($postIds),
+        'contents' => $faker->paragraph(),
+    ];
+});
+
+
 

@@ -42,5 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CommentSeeder::class);
         $this->call(LikeSeeder::class);
         $this->call(PostHashTagSeeder::class);
+        $this->call(AccusationSeeder::class);
     }
 }

@@ -8,7 +8,12 @@ class Post extends Model
 {
     public function users()
     {
-        return $this->belongsTo(User::class, 'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function accusations()
+    {
+        return $this->hasMany(Accusation::class);
     }
 
     public function hash_tags()

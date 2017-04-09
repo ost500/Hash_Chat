@@ -52,7 +52,7 @@ class RegisterController extends Controller
 
 
         return response()->json(
-            ["email" => $request->email, "name" => $request->user()->name, "api_token" => $request->user()->api_token, "picture" => $request->user()->picture]);
+            ["email" => $request->email, "name" => $request->user()->name, "api_token" => $request->user()->api_token, "picture" => $request->user()->picture, "token" => $request->token]);
 
     }
 

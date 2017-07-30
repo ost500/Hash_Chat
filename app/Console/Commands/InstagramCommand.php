@@ -10,6 +10,7 @@ use App\User;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 class InstagramCommand extends Command
@@ -45,9 +46,11 @@ class InstagramCommand extends Command
      */
     public function handle()
     {
+        $newDataExists = false;
+
         /** @var HashTag $ssuls */
         $tags = HashTag::get();
-        $tags->each(function (HashTag $tag) {
+        $tags->each(function (HashTag $tag) use (&$newDataExists) {
             try {
 
 
@@ -64,7 +67,7 @@ class InstagramCommand extends Command
                 foreach ($media as $me) {
                     foreach ($me['media']['nodes'] as $node) {
                         if (!Instagram::where('display_src', $node['display_src'])->exists()) {
-                            DB::transaction(function () use ($node, $title, $tag) {
+                            DB::transaction(function () use ($node, $title, $tag, &$newDataExists) {
                                 $newInstagram = new Instagram();
 
                                 $newInstagram->display_src = $node['display_src'];
@@ -98,6 +101,7 @@ class InstagramCommand extends Command
                                 $newPostHashTag->hash_tag_id = $tag->id;
                                 $newPostHashTag->save();
 
+                                $newDataExists = true;
                             });
                         }
                     }
@@ -107,6 +111,12 @@ class InstagramCommand extends Command
                 echo "[Instagram Crawling]에러가 발생했습니다 {$title}\n" . $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
             }
         });
+
+        if ($newDataExists) {
+            Artisan::call('push:toAll', [
+                'message' => "새 글이 등록 됐습니다."
+            ]);
+        }
     }
 
     public function getMediaByTag(string $name): array
@@ -123,7 +133,8 @@ class InstagramCommand extends Command
     }
 
 
-    public static function removeEmoji($text) {
+    public static function removeEmoji($text)
+    {
 
         $clean_text = "";
 
